@@ -26,7 +26,7 @@ const EdgesTable = observer(() => {
       <h3>Vertices o nudos:</h3>
       <Box sx={{ width: 600 }}>
         <form onSubmit={(e) => e.preventDefault()}>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} aria-label="simple table">
             <Table>
               <TableHead>
                 <TableRow>

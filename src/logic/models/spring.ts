@@ -1,5 +1,5 @@
-import { IVerticesData, IVerticesFullData } from './vertices'
-import { IEdge, IEdgesData, IEdgesFullData } from './edges'
+import { IVerticesData } from './vertices'
+import { IEdge, IEdgesFullData } from './edges'
 import { Matrix, inverse } from 'ml-matrix'
 
 interface IEdgeOfSprings extends IEdge {
@@ -18,7 +18,7 @@ function twoDimensionalArray<T>(
 ): T[][] {
   return Array(rows)
     .fill(null)
-    .map((e) => Array(columns).fill(value))
+    .map(() => Array(columns).fill(value))
 }
 
 export class Spring {
@@ -197,6 +197,8 @@ export class Spring {
     Object.keys(this.dataEdges).map((edge) =>
       this.assembler(this.dataEdges[edge])
     )
+
+    return this.k.global.toJSON()
   }
 
   buildForces() {
@@ -240,6 +242,8 @@ export class Spring {
       this.f.unrestricted = unrestricted
       //Se podria crear el fglobal uniendo el restricted y el unrestricted, lo dejo porque me parecen interesantes ambas formas, no te la des de listillo eder del futuro!
     })
+
+    return this.f.global
   }
   buildDisplacements() {
     this.u.global = Matrix.zeros(
@@ -282,6 +286,8 @@ export class Spring {
 
     this.u.restricted = restricted
     this.u.unrestricted = unrestricted
+
+    return this.u.global
   }
 
   splitGlobal() {

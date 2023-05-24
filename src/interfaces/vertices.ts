@@ -5,3 +5,11 @@ export interface IInputVertexData {
   displacement: string
   isRestricted: boolean
 }
+
+export interface IParsedVertexData {
+  id: string
+  name: string
+  force: number
+  displacement: number
+  isRestricted: boolean
+}
