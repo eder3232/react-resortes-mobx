@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
+import { Box } from '@mui/material'
 import VerticesTable from './components/VerticesTable'
 import EdgesTable from './components/EdgesTable'
 import Button from '@mui/material/Button'
@@ -9,8 +9,9 @@ import Results from './components/Results'
 
 function App() {
   return (
-    <Container maxWidth="lg">
-      <Box sx={{ m: 4 }}>
+    // <Container maxWidth="sm">
+    <Box sx={{ width: '100vw', overflow: 'hidden' }}>
+      <Box>
         <Box>
           <VerticesTable />
           <EdgesTable />
@@ -23,9 +24,30 @@ function App() {
           <Errors />
 
           <Results />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </Box>
       </Box>
-    </Container>
+    </Box>
+    // </Container>
   )
 }
 

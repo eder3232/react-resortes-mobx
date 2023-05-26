@@ -13,8 +13,9 @@ class ApplicationStore {
   errors: string[] = []
   inputVerticesData: IInputVertexData[] = initialVerticesData
   inputEdgesData: IInputEdgeData[] = initialEdgesData
-  solvedValues: { kGlobal: number[][] } = {
+  solvedValues: { kGlobal: number[][]; fGlobal: (number | string)[][] } = {
     kGlobal: [],
+    fGlobal: [],
   }
 
   constructor() {
@@ -159,7 +160,7 @@ class ApplicationStore {
     //Ensamblar la matriz global de rigidez
     this.solvedValues.kGlobal = spring.buildGlobal()
     //Ensamblamos las matrices de fuerzas
-    spring.buildForces()
+    this.solvedValues.fGlobal = spring.buildForces().global
     //Ensamblamos las matrices de desplazamientos
     spring.buildDisplacements()
     //separamos la matriz global de rigidez

@@ -26,95 +26,95 @@ const VerticesTable = observer(() => {
     <Box>
       <h2>Ingresa los datos:</h2>
       <h3>Vertices o nudos:</h3>
-      <Box sx={{ width: 600 }}>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align="center">Add</StyledTableCell>
-                  <StyledTableCell align="center">Remove</StyledTableCell>
-                  <StyledTableCell align="center">Nombre</StyledTableCell>
-                  <StyledTableCell align="center">Fuerza</StyledTableCell>
+      <Box>
+        {/* <form onSubmit={(e) => e.preventDefault()}> */}
+        {/* <Paper> */}
+        <TableContainer sx={{ maxHeight: 440, minWidth: 350, maxWidth: 680 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center">Add</StyledTableCell>
+                <StyledTableCell align="center">Remove</StyledTableCell>
+                <StyledTableCell align="center">Nombre</StyledTableCell>
+                <StyledTableCell align="center">Fuerza</StyledTableCell>
+                <StyledTableCell align="center">Desplazamiento</StyledTableCell>
+                <StyledTableCell align="center">Restringido?</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {store.inputVerticesData.map((vertex, i) => (
+                <TableRow key={vertex['id']}>
                   <StyledTableCell align="center">
-                    Desplazamiento
+                    <IconButton onClick={() => store.vertices_onAddNewRow(i)}>
+                      <AddCircleOutlineIcon />
+                    </IconButton>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Restringido?</StyledTableCell>
+
+                  <StyledTableCell
+                    align="center"
+                    onClick={() => store.vertices_onDeleteRow(i)}
+                  >
+                    <IconButton>
+                      <RemoveCircleOutlineIcon />
+                    </IconButton>
+                  </StyledTableCell>
+
+                  <StyledTableCell>
+                    <TextField
+                      onChange={(e) =>
+                        store.vertices_onChange(
+                          e as React.ChangeEvent<HTMLInputElement>
+                        )
+                      }
+                      name={`name-${i}`}
+                      value={vertex.name}
+                      sx={{ width: 100 }}
+                    />
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <TextField
+                      onChange={(e) =>
+                        store.vertices_onChange(
+                          e as React.ChangeEvent<HTMLInputElement>
+                        )
+                      }
+                      name={`force-${i}`}
+                      value={vertex.force}
+                      sx={{ width: 100 }}
+                      type={'number'}
+                    />
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center">
+                    <TextField
+                      onChange={(e) =>
+                        store.vertices_onChange(
+                          e as React.ChangeEvent<HTMLInputElement>
+                        )
+                      }
+                      name={`displacement-${i}`}
+                      value={vertex.displacement}
+                      sx={{ width: 100 }}
+                      type={'number'}
+                    />
+                  </StyledTableCell>
+
+                  <StyledTableCell align="center" padding="checkbox">
+                    <Checkbox
+                      name={`isRestricted-${i}`}
+                      onChange={(e) => store.vertices_onClickCheckbox(e)}
+                      inputProps={{ 'aria-label': 'controlled' }}
+                      checked={vertex.isRestricted}
+                    />
+                  </StyledTableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {store.inputVerticesData.map((vertex, i) => (
-                  <TableRow key={vertex['id']}>
-                    <StyledTableCell align="center">
-                      <IconButton onClick={() => store.vertices_onAddNewRow(i)}>
-                        <AddCircleOutlineIcon />
-                      </IconButton>
-                    </StyledTableCell>
-
-                    <StyledTableCell
-                      align="center"
-                      onClick={() => store.vertices_onDeleteRow(i)}
-                    >
-                      <IconButton>
-                        <RemoveCircleOutlineIcon />
-                      </IconButton>
-                    </StyledTableCell>
-
-                    <StyledTableCell>
-                      <TextField
-                        onChange={(e) =>
-                          store.vertices_onChange(
-                            e as React.ChangeEvent<HTMLInputElement>
-                          )
-                        }
-                        name={`name-${i}`}
-                        value={vertex.name}
-                        sx={{ width: 100 }}
-                      />
-                    </StyledTableCell>
-
-                    <StyledTableCell align="center">
-                      <TextField
-                        onChange={(e) =>
-                          store.vertices_onChange(
-                            e as React.ChangeEvent<HTMLInputElement>
-                          )
-                        }
-                        name={`force-${i}`}
-                        value={vertex.force}
-                        sx={{ width: 100 }}
-                        type={'number'}
-                      />
-                    </StyledTableCell>
-
-                    <StyledTableCell align="center">
-                      <TextField
-                        onChange={(e) =>
-                          store.vertices_onChange(
-                            e as React.ChangeEvent<HTMLInputElement>
-                          )
-                        }
-                        name={`displacement-${i}`}
-                        value={vertex.displacement}
-                        sx={{ width: 100 }}
-                        type={'number'}
-                      />
-                    </StyledTableCell>
-
-                    <StyledTableCell align="center">
-                      <Checkbox
-                        name={`isRestricted-${i}`}
-                        onChange={(e) => store.vertices_onClickCheckbox(e)}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        checked={vertex.isRestricted}
-                      />
-                    </StyledTableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </form>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* </Paper> */}
+        {/* </form> */}
       </Box>
 
       <ol>

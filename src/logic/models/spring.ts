@@ -243,7 +243,11 @@ export class Spring {
       //Se podria crear el fglobal uniendo el restricted y el unrestricted, lo dejo porque me parecen interesantes ambas formas, no te la des de listillo eder del futuro!
     })
 
-    return this.f.global
+    return {
+      restricted: this.f.restricted,
+      unrestricted: this.f.unrestricted,
+      global: this.f.global,
+    }
   }
   buildDisplacements() {
     this.u.global = Matrix.zeros(

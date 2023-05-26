@@ -3,8 +3,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 import store from '../store/store'
 
-import Box from '@mui/material/Box'
-import { IconButton, TextField } from '@mui/material'
+import { IconButton, TextField, Box } from '@mui/material'
 // import Checkbox from '@mui/material/Checkbox'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -24,9 +23,13 @@ const EdgesTable = observer(() => {
     <Box>
       <h2>Ingresa los datos:</h2>
       <h3>Vertices o nudos:</h3>
-      <Box sx={{ width: 600 }}>
+      <Box>
         <form onSubmit={(e) => e.preventDefault()}>
-          <TableContainer component={Paper} aria-label="simple table">
+          <TableContainer
+            component={Paper}
+            aria-label="simple table"
+            sx={{ maxHeight: 440, minWidth: 350, maxWidth: 680 }}
+          >
             <Table>
               <TableHead>
                 <TableRow>
