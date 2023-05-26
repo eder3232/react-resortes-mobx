@@ -13,9 +13,30 @@ class ApplicationStore {
   errors: string[] = []
   inputVerticesData: IInputVertexData[] = initialVerticesData
   inputEdgesData: IInputEdgeData[] = initialEdgesData
-  solvedValues: { kGlobal: number[][]; fGlobal: (number | string)[][] } = {
-    kGlobal: [],
-    fGlobal: [],
+  solvedValues: {
+    k: {
+      global: number[][]
+      krr: number[][]
+      kru: number[][]
+      kur: number[][]
+      kuu: number[][]
+    }
+    f: {
+      global: (number | string)[][]
+      restricted: string[][]
+      unrestricted: number[][]
+      solved: number[][]
+    }
+    u: {
+      global: (number | string)[][]
+      restricted: number[][]
+      unrestricted: string[][]
+      solved: number[][]
+    }
+  } = {
+    k: { global: [[]], krr: [[]], kru: [[]], kur: [[]], kuu: [[]] },
+    f: { global: [[]], restricted: [[]], unrestricted: [[]], solved: [[]] },
+    u: { global: [[]], restricted: [[]], unrestricted: [[]], solved: [[]] },
   }
 
   constructor() {
@@ -136,6 +157,7 @@ class ApplicationStore {
         }
       }
     })
+    this.errors = []
 
     const edges = new Edges(vertices.getData())
 
@@ -158,24 +180,44 @@ class ApplicationStore {
     //Generar el vector de grados de libertad de cada elemento
     spring.generateTableDof()
     //Ensamblar la matriz global de rigidez
-    this.solvedValues.kGlobal = spring.buildGlobal()
+    this.solvedValues.k.global = spring.buildGlobal()
     //Ensamblamos las matrices de fuerzas
-    this.solvedValues.fGlobal = spring.buildForces().global
+    const {
+      global: fGlobal,
+      restricted: fRestricted,
+      unrestricted: fUnrestricted,
+    } = spring.buildForces()
+    this.solvedValues.f.global = fGlobal
+    this.solvedValues.f.restricted = fRestricted
+    this.solvedValues.f.unrestricted = fUnrestricted
     //Ensamblamos las matrices de desplazamientos
-    spring.buildDisplacements()
+    const {
+      global: uGlobal,
+      restricted: uRestricted,
+      unrestricted: uUnrestricted,
+    } = spring.buildDisplacements()
+    this.solvedValues.u.global = uGlobal
+    this.solvedValues.u.restricted = uRestricted
+    this.solvedValues.u.unrestricted = uUnrestricted
     //separamos la matriz global de rigidez
-    spring.splitGlobal()
+    const { krr, kru, kur, kuu } = spring.splitGlobal()
+
+    this.solvedValues.k.krr = krr
+    this.solvedValues.k.kru = kru
+    this.solvedValues.k.kur = kur
+    this.solvedValues.k.kuu = kuu
 
     try {
       //Resolver la matriz de desplazamientos
-      spring.solveDisplacements()
+      this.solvedValues.u.solved = spring.solveDisplacements()
       //Resolver la matriz de fuerzas
-      spring.solveForces()
+      this.solvedValues.f.solved = spring.solveForces()
       //Creando las matrices globales numericas f y u
       spring.buildNumericFAndU()
       //Obteniendo las fuerzas internas
       spring.solveInternalForces()
       // return spring
+      this.errors = []
     } catch {
       this.errors.push('La matriz no tiene inversa, verifica los datos.')
     }

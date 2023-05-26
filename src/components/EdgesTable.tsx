@@ -21,8 +21,7 @@ import StyledTableCell from './StyledTableCell'
 const EdgesTable = observer(() => {
   return (
     <Box>
-      <h2>Ingresa los datos:</h2>
-      <h3>Vertices o nudos:</h3>
+      <h3>Edges o barras:</h3>
       <Box>
         <form onSubmit={(e) => e.preventDefault()}>
           <TableContainer
@@ -100,7 +99,7 @@ const EdgesTable = observer(() => {
 
                     <StyledTableCell align="center">
                       <TextField
-                        onChange={(e) =>
+                        onChange={(e): void =>
                           store.edges_onChange(
                             e as React.ChangeEvent<HTMLInputElement>
                           )
@@ -119,11 +118,11 @@ const EdgesTable = observer(() => {
         </form>
       </Box>
 
-      <ol>
+      {/* <ol>
         {store.inputEdgesData.map((e) => (
           <li key={e.id}>{JSON.stringify(e)}</li>
         ))}
-      </ol>
+      </ol> */}
     </Box>
   )
 })

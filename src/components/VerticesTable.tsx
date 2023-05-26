@@ -29,7 +29,11 @@ const VerticesTable = observer(() => {
       <Box>
         {/* <form onSubmit={(e) => e.preventDefault()}> */}
         {/* <Paper> */}
-        <TableContainer sx={{ maxHeight: 440, minWidth: 350, maxWidth: 680 }}>
+        <TableContainer
+          sx={{ maxHeight: 440, minWidth: 350, maxWidth: 680 }}
+          component={Paper}
+          aria-label="simple table"
+        >
           <Table>
             <TableHead>
               <TableRow>
@@ -117,11 +121,11 @@ const VerticesTable = observer(() => {
         {/* </form> */}
       </Box>
 
-      <ol>
+      {/* <ol>
         {store.inputVerticesData.map((e) => (
           <li key={e.id}>{JSON.stringify(e)}</li>
         ))}
-      </ol>
+      </ol> */}
     </Box>
   )
 })

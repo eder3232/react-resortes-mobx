@@ -278,20 +278,24 @@ export class Spring {
       } else {
         //Agregando los valores necesarios a F global
         this.u.global[this.springConfig.orderOfDOF[key].position][0] =
-          'u_' + key
+          'U_' + key
 
         //Agregando los valores necesarios a F unestricted
         unrestricted[
           this.springConfig.orderOfDOF[key].position -
             this.springConfig.verticesRestricted
-        ][0] = 'u_' + key
+        ][0] = 'U_' + key
       }
     })
 
     this.u.restricted = restricted
     this.u.unrestricted = unrestricted
 
-    return this.u.global
+    return {
+      restricted: this.u.restricted,
+      unrestricted: this.u.unrestricted,
+      global: this.u.global,
+    }
   }
 
   splitGlobal() {
@@ -334,12 +338,19 @@ export class Spring {
     //   kur: this.k.kur.toJSON(),
     //   kuu: this.k.kuu.toJSON(),
     // })
+    return {
+      krr: this.k.krr.toJSON(),
+      kru: this.k.kru.toJSON(),
+      kur: this.k.kur.toJSON(),
+      kuu: this.k.kuu.toJSON(),
+    }
   }
 
   solveDisplacements() {
     this.solved.u.unrestricted = inverse(this.k.kuu).mmul(
       Matrix.sub(this.f.unrestricted, this.k.kur.mmul(this.u.restricted))
     )
+    return this.solved.u.unrestricted.toJSON()
   }
 
   solveForces() {
@@ -347,6 +358,7 @@ export class Spring {
       this.k.krr.mmul(this.u.restricted),
       this.k.kru.mmul(this.solved.u.unrestricted)
     )
+    return this.solved.f.restricted.toJSON()
   }
 
   buildNumericFAndU() {
